@@ -48,7 +48,7 @@ function handleMove(request, response) {
   
 
   response.status(200).send({
-    move: move
+    move: movementChoice(gameData)
   })
 }
 
@@ -81,14 +81,30 @@ function isSafeDestination(coordEst, gameData){
   if (coordEst.x < 0){
     return false
   }
+  if (coordEst.x < gameData.board.width - 1){
+    return false
+  }
   if (coordEst.y < 0){
     return false
   }
-  if (coordEst.x < 0){
-    return false
-  }
-  if (coordEst.x < 0){
+  if (coordEst.y < gameData.board.height - 1){
     return false
   }
   return true
+}
+
+function movementChoice(gameData){
+  
+}
+
+function dontDieDirection(gameData){
+  //up
+  let upCoord = {
+    x: gameData.board.you.head.x,
+    y: gameData.board.you.head.y + 1,
+  }
+  //right
+  //down
+  //left
+
 }
