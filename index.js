@@ -145,3 +145,25 @@ function dontDieDirection(gameData){
     return "left"
   }
 }
+
+function getClosestFoodPlop(gamedata){
+  //finding food
+  console.log("finding food")
+  let closestFood = null 
+  let foodDistance = gameData.board.height + gameData.board.width
+  for (let i = 0; i < gameData.board.food.length; i++){
+    let foodPlop = gameData.board.food[i]
+    let foodTravelSpace = findDistance(foodPlop, gameData.you.head)
+    if (foodTravelSpace < foodDistance){
+      closestFood = foodPlop 
+      foodDistance = foodTravelSpace
+    }
+
+  }  
+  console.log("found closest food " + coordToString(closestFood))
+  return closestFood
+}
+
+function findDistance(coord0, coord1){
+  return Math.abs(coord1.x - coord0.x) + Math.abs(coord1.y - coord0.y)
+}
