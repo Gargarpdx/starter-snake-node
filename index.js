@@ -10,7 +10,7 @@ app.get('/', handleIndex)
 app.post('/start', handleStart)
 app.post('/move', handleMove)
 app.post('/end', handleEnd)
-console.log("JG Version 2");
+console.log("garyscript1");
 app.listen(PORT, () => console.log(`Battlesnake Server listening at http://127.0.0.1:${PORT}`))
 
 
@@ -94,17 +94,40 @@ function isSafeDestination(coordEst, gameData){
 }
 
 function movementChoice(gameData){
-  
+  return dontDieDirection(gameData)
 }
 
 function dontDieDirection(gameData){
   //up
   let upCoord = {
-    x: gameData.board.you.head.x,
-    y: gameData.board.you.head.y + 1,
+    x: gameData.you.head.x,
+    y: gameData.you.head.y + 1,
+  }
+  if (isSafeDestination(upCoord, gameData)){
+    return "up"
   }
   //right
+  let rightCoord = {
+    x: gameData.you.head.x + 1,
+    y: gameData.you.head.y,
+  }
+  if (isSafeDestination(rightCoord, gameData)){
+    return "right"
+  }
   //down
+  let downCoord = {
+    x: gameData.you.head.x,
+    y: gameData.you.head.y - 1,
+  }
+  if (isSafeDestination(downCoord, gameData)){
+    return "down"
+  }
   //left
-
+  let leftCoord = {
+    x: gameData.you.head.x - 1,
+    y: gameData.you.head.y,
+  }
+  if (isSafeDestination(leftCoord, gameData)){
+    return "left"
+  }
 }
