@@ -46,19 +46,7 @@ function handleMove(request, response) {
   
   console.log("turn = "+gameData.turn)
   
-  //move = 'left'+'down'+'right'+'up'
-  if (gameData.turn%4===0){
-    move = "left"
-  }else if(gameData.turn%4===1){
-    move = "up"
-  }else if(gameData.turn%4===2){
-    move = "right"
-  }else if(gameData.turn%4===3){
-    move = "down"
-  }
-  console.log("head@")
-  console.dir(gameData.you.head)
-  console.log('MOVE: ' + move)
+
   response.status(200).send({
     move: move
   })
@@ -71,3 +59,36 @@ function handleEnd(request, response) {
   response.status(200).send('ok')
 }
 
+function areCoordSame(coord0, coord1){
+  return (coord0.x === coord1.x && coord0.y === coord1.y)
+}
+
+/**
+ * thois following function is to detect if there is a snake body or a wall in a spot that the program is thinking about going to
+ */
+function isSafeDestination(coordEst, gameData){
+  //check snake collision first
+  for (let i = 0; i < gameData.board.snakes.length; i++ ){
+    let snake = gameData.board.snakes[i]
+    for (let i1 = 0; i1 < snake.body.length; i1++){
+      let bodyCoord = snake.body[i1]
+      if (areCoordSame(coordEst, bodyCoord)){
+        return false
+      }
+    }
+  }
+  //check wall collison next
+  if (coordEst.x < 0){
+    return false
+  }
+  if (coordEst.y < 0){
+    return false
+  }
+  if (coordEst.x < 0){
+    return false
+  }
+  if (coordEst.x < 0){
+    return false
+  }
+  return true
+}
