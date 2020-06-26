@@ -13,7 +13,6 @@ app.post('/end', handleEnd)
 console.log("garyscript1");
 app.listen(PORT, () => console.log(`Battlesnake Server listening at http://127.0.0.1:${PORT}`))
 
-
 function handleIndex(request, response) {
   console.log("event=requestIndex");
   var battlesnakeInfo = {
@@ -46,9 +45,10 @@ function handleMove(request, response) {
   
   console.log("turn = "+gameData.turn)
   
-
+  let move = movementChoice(gameData)
+  console.log("move = " + move)
   response.status(200).send({
-    move: movementChoice(gameData)
+    move: move
   })
 }
 
@@ -60,34 +60,44 @@ function handleEnd(request, response) {
 }
 
 function areCoordSame(coord0, coord1){
+  console.log("areCoordSame " + coordToString(coord0) + coordToString(coord1))
   return (coord0.x === coord1.x && coord0.y === coord1.y)
 }
 
+function coordToString(coord){
+  return "(" + coord.x + "," + coord.y + ")"
+}
 /**
- * thois following function is to detect if there is a snake body or a wall in a spot that the program is thinking about going to
+ * this following function is to detect if there is a snake body or a wall in a spot that the program is thinking about going to
  */
 function isSafeDestination(coordEst, gameData){
+  console.log("isSafeDestination " + coordToString(coordEst))
   //check snake collision first
   for (let i = 0; i < gameData.board.snakes.length; i++ ){
     let snake = gameData.board.snakes[i]
     for (let i1 = 0; i1 < snake.body.length; i1++){
       let bodyCoord = snake.body[i1]
       if (areCoordSame(coordEst, bodyCoord)){
+        console.log("body collision found")
         return false
       }
     }
   }
   //check wall collison next
   if (coordEst.x < 0){
+    console.log("left wall detected")
     return false
   }
-  if (coordEst.x < gameData.board.width - 1){
+  if (coordEst.x > gameData.board.width - 1){
+    console.log("right wall detected")
     return false
   }
   if (coordEst.y < 0){
+    console.log("bottom wall detected")
     return false
   }
-  if (coordEst.y < gameData.board.height - 1){
+  if (coordEst.y > gameData.board.height - 1){
+    console.log("top wall detected")
     return false
   }
   return true
@@ -99,6 +109,7 @@ function movementChoice(gameData){
 
 function dontDieDirection(gameData){
   //up
+  console.log("trying up")
   let upCoord = {
     x: gameData.you.head.x,
     y: gameData.you.head.y + 1,
@@ -107,6 +118,7 @@ function dontDieDirection(gameData){
     return "up"
   }
   //right
+  console.log("trying right")
   let rightCoord = {
     x: gameData.you.head.x + 1,
     y: gameData.you.head.y,
@@ -115,6 +127,7 @@ function dontDieDirection(gameData){
     return "right"
   }
   //down
+  console.log("trying down")
   let downCoord = {
     x: gameData.you.head.x,
     y: gameData.you.head.y - 1,
@@ -123,6 +136,7 @@ function dontDieDirection(gameData){
     return "down"
   }
   //left
+  console.log("trying left")
   let leftCoord = {
     x: gameData.you.head.x - 1,
     y: gameData.you.head.y,
