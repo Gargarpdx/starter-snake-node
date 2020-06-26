@@ -104,8 +104,19 @@ function isSafeDestination(coordEst, gameData){
 }
 
 function movementChoice(gameData){
-  return dontDieDirection(gameData)
+//  return dontDieDirection(gameData)
+  return foodDirection(gameData)
 }
+
+function foodDirection(gameData){
+  let closestFood = getClosestFoodPlop(gamedata)
+
+}
+
+function getDirectionsToCoord(gameData, destinationCoord){
+  gameData.you.head
+}
+
 
 function dontDieDirection(gameData){
   //up
