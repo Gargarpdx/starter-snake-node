@@ -18,9 +18,9 @@ function handleIndex(request, response) {
   var battlesnakeInfo = {
     apiversion: '1',
     author: '',
-    color: '#001000',
-    head: 'smile',
-    tail: 'bolt'
+    color: '#0010ff',
+    head: 'sand-worm',
+    tail: 'block-bum'
   }
   response.status(200).json(battlesnakeInfo)
 }
@@ -104,8 +104,8 @@ function isSafeDestination(coordEst, gameData){
 }
 
 function movementChoice(gameData){
-//  return dontDieDirection(gameData)
-  return foodDirection(gameData)
+  return dontDieDirection(gameData)
+//  return foodDirection(gameData)
 }
 
 function foodDirection(gameData){
