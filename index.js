@@ -104,17 +104,61 @@ function isSafeDestination(coordEst, gameData){
 }
 
 function movementChoice(gameData){
-  return dontDieDirection(gameData)
-//  return foodDirection(gameData)
+//  return dontDieDirection(gameData)
+  return foodDirection(gameData)
 }
 
 function foodDirection(gameData){
   let closestFood = getClosestFoodPlop(gamedata)
+  return getBestDirectionsToCoord(gameData, closestFood)
 
 }
 
-function getDirectionsToCoord(gameData, destinationCoord){
-  gameData.you.head
+function getBestDirectionsToCoord(gameData, destinationCoord){
+  let head = gameData.you.head
+  let attempts = {
+    left: false,
+    leftCoords: {x: head.x - 1, y:head.y}, 
+    up: false,
+    upCoords: {x: head.x, y:head.y + 1},
+    right: false,
+    rightCoords: {x: head.x + 1, y:head.y},
+    down: false, 
+    downCoords: {x: head.x, y:head.y - 1},
+  }
+  if (destinationCoord.x > head.x){
+    //checking right
+    if (isSafeDestination(attempts.rightCoords, gameData)){
+      return "right"
+    } else {
+      attempts.right = true
+    }
+  }
+  if (destinationCoord.x < head.x){
+    //checking left
+    if (isSafeDestination(attempts.leftCoords, gameData)){
+      return "left"
+    } else {
+      attempts.left = true
+    }
+  }
+   if (destinationCoord.y > head.y){
+    //checking up
+    if (isSafeDestination(attempts.upCoords, gameData)){
+      return "up"
+    } else {
+      attempts.up = true
+    }
+  }
+   if (destinationCoord.y < head.y){
+    //checking down
+    if (isSafeDestination(attempts.downCoords, gameData)){
+      return "down"
+    } else {
+      attempts.down = true
+    }
+  }
+  //nonfoob based direction
 }
 
 
@@ -174,6 +218,7 @@ function getClosestFoodPlop(gamedata){
   console.log("found closest food " + coordToString(closestFood))
   return closestFood
 }
+
 
 function findDistance(coord0, coord1){
   return Math.abs(coord1.x - coord0.x) + Math.abs(coord1.y - coord0.y)
