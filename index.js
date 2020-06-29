@@ -18,7 +18,7 @@ function handleIndex(request, response) {
   var battlesnakeInfo = {
     apiversion: '1',
     author: '',
-    color: '#f1f1f1',
+    color: '#0000ff',
     head: 'bwc-snow-worm',
     tail: 'block-bum'
   }
@@ -109,7 +109,7 @@ function movementChoice(gameData){
 }
 
 function foodDirection(gameData){
-  let closestFood = getClosestFoodPlop(gamedata)
+  let closestFood = getClosestFoodPlop(gameData)
   return getBestDirectionsToCoord(gameData, closestFood)
 
 }
@@ -158,7 +158,28 @@ function getBestDirectionsToCoord(gameData, destinationCoord){
       attempts.down = true
     }
   }
-  //nonfoob based direction
+  //nonfood based direction
+  if (attempts.right === false){
+    if (isSafeDestination(attempts.rightCoords, gameData)){
+      return "right"
+    }
+  }
+  if (attempts.down === false){
+    if (isSafeDestination(attempts.downCoords, gameData)){
+      return "down"
+    }
+  }
+  if (attempts.left === false){
+    if (isSafeDestination(attempts.leftCoords, gameData)){
+      return "left"
+    }
+  }
+  if (attempts.up === false){
+    if (isSafeDestination(attempts.upCoords, gameData)){
+      return "up"
+    }
+  }
+  // if we make it to here then we are fucked
 }
 
 
@@ -201,7 +222,7 @@ function dontDieDirection(gameData){
   }
 }
 
-function getClosestFoodPlop(gamedata){
+function getClosestFoodPlop(gameData){
   //finding food
   console.log("finding food")
   let closestFood = null 
