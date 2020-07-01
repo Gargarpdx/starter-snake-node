@@ -75,6 +75,12 @@ function isSafeDestination(coordEst, gameData){
   //check snake collision first
   for (let i = 0; i < gameData.board.snakes.length; i++ ){
     let snake = gameData.board.snakes[i]
+    if (gameData.you.id !== snake.id){
+      if (findDistance(snake.head, coordEst) === 1){
+        console.log("threat of other snake head detected!!")
+        return false
+      }
+    }
     for (let i1 = 0; i1 < snake.body.length; i1++){
       let bodyCoord = snake.body[i1]
       if (areCoordSame(coordEst, bodyCoord)){
