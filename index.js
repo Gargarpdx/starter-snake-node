@@ -106,6 +106,9 @@ function isSafeDestination(coordEst, gameData){
     console.log("top wall detected")
     return false
   }
+  //this next part will mak sure that it cant trap itself or be trapped by other snakes
+  //if ()
+  
   return true
 }
 
