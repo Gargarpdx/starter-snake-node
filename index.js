@@ -36,6 +36,7 @@ function handleStart(request, response) {
 
 function handleMove(request, response) {
   var gameData = request.body
+  console.table(getBoard(gameData))
 
   console.log("event=handleMove gameData=");
   console.dir(gameData,{depth:null});
@@ -50,6 +51,28 @@ function handleMove(request, response) {
   response.status(200).send({
     move: move
   })
+}
+
+function getBoard(gameData){
+  console.dir(gameData.board)
+  let width = gameData.board.width
+  let height = gameData.board.height
+  let board = []
+  for (let indexX = 0; indexX < width; indexX++){
+    let boardY = []
+
+    for (let indexY = 0; indexY < height; indexY++){
+      boardY.push(0)
+    }
+    board.push(boardY)
+  }
+  //board[gameData.you.head.x][gameData.you.head.y] = 1
+  for(let i = 0; i < gameData.board.food.length; i++){
+    let foode = gameData.board.food[i]
+  
+  }
+
+  return board
 }
 
 function handleEnd(request, response) {
