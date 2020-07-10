@@ -62,15 +62,24 @@ function getBoard(gameData){
     let boardY = []
 
     for (let indexY = 0; indexY < height; indexY++){
-      boardY.push(0)
+      boardY.push("")
     }
     board.push(boardY)
   }
-  //board[gameData.you.head.x][gameData.you.head.y] = 1
+  //board[gameData.you.head.x][gameData.you.head.y] = "h"
   for(let i = 0; i < gameData.board.food.length; i++){
     let foode = gameData.board.food[i]
-  
+    board[foode.x][foode.y] = "*"
   }
+  for(let iSnake = 0; iSnake < gameData.board.snakes.length; iSnake++){
+    let snake = gameData.board.snakes[iSnake]
+    for(let iBody = 0; iBody < snake.body.length; iBody++){
+      let body = snake.body[iBody]
+      board[body.x][body.y] = "B"
+    }
+  }
+
+  
 
   return board
 }
