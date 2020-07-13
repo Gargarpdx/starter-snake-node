@@ -82,7 +82,10 @@ function getBoard(gameData){
   }
   for(let iSnake = 0; iSnake < gameData.board.snakes.length; iSnake++){
     let snake = gameData.board.snakes[iSnake]
-    for()
+
+    if(snake.id !== gameData.you.id){
+      markPotentialCollisions(board, snake.head)
+    }
 
     for(let iBody = 0; iBody < snake.body.length; iBody++){
       let body = snake.body[iBody]
@@ -94,6 +97,9 @@ function getBoard(gameData){
 }
 
 
+function markPotentialCollisions(board, snakeHead){
+// not complete start working from here
+}
 
 function handleEnd(request, response) {
   var gameData = request.body
