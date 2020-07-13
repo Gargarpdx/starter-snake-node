@@ -53,6 +53,15 @@ function handleMove(request, response) {
   })
 }
 
+function getDefaultCellData(){
+  return {
+    d: 666, //distance from our snake head
+    s: null, //start direction of the scan
+    c: 3, //contents. 0 is collision, 1 is potential collision, 2 is food, 3 is empty space
+
+  }
+}
+
 function getBoard(gameData){
   console.dir(gameData.board)
   let width = gameData.board.width
@@ -62,27 +71,29 @@ function getBoard(gameData){
     let boardY = []
 
     for (let indexY = 0; indexY < height; indexY++){
-      boardY.push("")
+      boardY.push(getDefaultCellData())
     }
     board.push(boardY)
   }
   //board[gameData.you.head.x][gameData.you.head.y] = "h"
   for(let i = 0; i < gameData.board.food.length; i++){
     let foode = gameData.board.food[i]
-    board[foode.x][foode.y] = "*"
+    board[foode.x][foode.y].c = 2 // 2 = food, dont forget
   }
   for(let iSnake = 0; iSnake < gameData.board.snakes.length; iSnake++){
     let snake = gameData.board.snakes[iSnake]
+    for()
+
     for(let iBody = 0; iBody < snake.body.length; iBody++){
       let body = snake.body[iBody]
-      board[body.x][body.y] = "B"
+      board[body.x][body.y].c = 0 // counting in coding starts with 0 not 1 so this would be the first priority to deal with therefor it would be another snake's body
     }
   }
-
   
-
   return board
 }
+
+
 
 function handleEnd(request, response) {
   var gameData = request.body
@@ -92,7 +103,7 @@ function handleEnd(request, response) {
 }
 
 function areCoordSame(coord0, coord1){
-  console.log("areCoordSame " + coordToString(coord0) + coordToString(coord1))
+  //console.log("areCoordSame " + coordToString(coord0) + coordToString(coord1))
   return (coord0.x === coord1.x && coord0.y === coord1.y)
 }
 
